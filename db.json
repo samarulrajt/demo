@@ -1,5 +1,6 @@
 {
   "general": { 
-    "bgp_best_path": true, "bgp_loc_com": false }
+    "bgp_best_path": true, 
+    "bgp_loc_com": false
   }
 }
