@@ -14,6 +14,57 @@
   }
 }
 
+import { Component, AfterViewInit, ElementRef } from '@angular/core';
+import { ICellRendererAngularComp } from 'ag-grid-angular';
+import * as bootstrap from 'bootstrap';
+
+@Component({
+  selector: 'app-action-cell-renderer',
+  template: `
+    <div class="btn-group" role="group" aria-label="Action Buttons">
+      <button type="button" class="btn"
+              data-bs-toggle="tooltip" title="Show More">
+        <cds-icon type="2021" name="035-more" ariaLabel="show more icon"
+                  altText="show more" pathColor="#034C81"
+                  [svgStyle]="{'width.px': 20, 'height.px': 20}">
+        </cds-icon>
+      </button>
+
+      <button type="button" class="btn"
+              data-bs-toggle="tooltip" title="Approve"
+              (click)="approve()" [disabled]="!hasPermission">
+        <cds-icon idStr="icon-id" name="072-success" type="2021"
+                  ariaLabel="Approve icon">
+        </cds-icon>
+      </button>
+
+      <button type="button" class="btn"
+              data-bs-toggle="tooltip" title="Reject">
+        <cds-icon name="073-error" type="2021"
+                  ariaLabel="Reject icon">
+        </cds-icon>
+      </button>
+    </div>
+  `
+})
+export class ActionCellRenderer implements ICellRendererAngularComp, AfterViewInit {
+  constructor(private el: ElementRef) {}
+
+  agInit(params: any): void {}
+  refresh(params: any): boolean { return false; }
+
+  ngAfterViewInit() {
+    // Initialize Bootstrap tooltips for all buttons in this cell
+    const tooltipTriggerList = this.el.nativeElement.querySelectorAll('[data-bs-toggle="tooltip"]');
+    tooltipTriggerList.forEach((tooltipTriggerEl: any) => {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  }
+
+  approve() {
+    console.log("Approved clicked");
+  }
+}
 
 ::ng-deep .status-active {
   background-color: #d4edda !important;
