@@ -21,14 +21,27 @@ export function buildScriptString(script: IScript): string {
       case '<=':
         sqlPart = `${rule.field} ${rule.operator} '${rule.value}'`;
         break;
+        case 'in':
+        case 'not in': {
+    // Ensure value is in correct SQL list format
+    let values = rule.value;
 
-      case 'in':
-        sqlPart = `${rule.field} IN ${rule.value}`;
-        break;
+    if (typeof values === 'string') {
+      // Split string by comma, trim, wrap with quotes
+      values = values
+        .split(',')
+        .map(v => `'${v.trim()}'`)
+        .join(', ');
+    } else if (Array.isArray(values)) {
+      // If array → convert to quoted string list
+      values = values.map(v => `'${v}'`).join(', ');
+    }
 
-      case 'not in':
-        sqlPart = `${rule.field} NOT IN ${rule.value}`;
-        break;
+    sqlPart = `${rule.field} ${rule.operator.toUpperCase()} (${values})`;
+    }
+break;
+  
+      break;
 
       case 'like':
         sqlPart = `${rule.field} LIKE '%${rule.value}%'`;
