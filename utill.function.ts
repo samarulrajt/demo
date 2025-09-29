@@ -73,5 +73,22 @@ break;
   }
 
   // Join groups by OR
-  return groups.join(' OR ');
+  return groups.join(' OR ')
+if (format === 'if') {
+    const caseParts: string[] = ['CASE'];
+
+    rules.forEach((r: any) => {
+      const condition = `${r.field} ${r.operator} ${r.value}`;
+      const assignment = r.then || `'TRUE'`;
+      caseParts.push(`WHEN ${condition} THEN ${assignment}`);
+    });
+
+    if (scriptConfig.else) {
+      caseParts.push(`ELSE ${scriptConfig.else}`);
+    }
+
+    caseParts.push('END');
+    return caseParts.join(' ')
+}
+
 }
