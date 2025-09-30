@@ -1,0 +1,18 @@
+<div class="ifthen-rule" [formGroup]="rule">
+  <h4>Condition</h4>
+  <app-group [group]="conditionGroup"></app-group>
+
+  <div class="then-else">
+    <label>Then:</label>
+    <input type="text" formControlName="thenValue" />
+    <span class="error" *ngIf="rule.get('thenValue')?.invalid && rule.get('thenValue')?.touched">
+      Required
+    </span>
+
+    <label>Else:</label>
+    <input type="text" formControlName="elseValue" />
+    <span class="error" *ngIf="rule.get('elseValue')?.invalid && rule.get('elseValue')?.touched">
+      Required
+    </span>
+  </div>
+</div>

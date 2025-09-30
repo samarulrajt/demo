@@ -1,0 +1,60 @@
+<div>
+  <label>Format: </label>
+  <select [(ngModel)]="format">
+    <option value="SINGLE">SINGLE</option>
+    <option value="IF_THEN">IF_THEN</option>
+  </select>
+
+  <button type="button" (click)="resetRules()">Start New</button>
+</div>
+
+<!-- SINGLE format -->
+@if (format() === 'SINGLE') {
+@for (rule of singleGroups; track rule) {
+<app-group [group]="rule"></app-group>
+}
+}
+
+<!-- IF_THEN format -->
+<!-- @if (format() === 'IF_THEN' && ifThenWrappers.length > 0) {
+@for (wrapper of ifThenWrappers; track wrapper) {
+<div class="ifthen-box" [formGroup]="wrapper">
+  <label>Output Field:</label>
+  <input type="text" formControlName="outputField" />
+
+  @for (sf of getScriptFormat(wrapper); track sf) {
+  <app-ifthen [rule]="sf"></app-ifthen>
+  }
+</div>
+}
+} -->
+@if (format() === 'IF_THEN' && ifThenWrappers.length > 0) {
+@for (wrapper of ifThenWrappers; track wrapper) {
+<div class="ifthen-box" [formGroup]="wrapper">
+  <label>Output Field:</label>
+  <input type="text" formControlName="outputField" />
+  <span class="error" *ngIf="wrapper.get('outputField')?.invalid && wrapper.get('outputField')?.touched">
+    Required
+  </span>
+  <h3>Conditions</h3>
+  @for (sf of getScriptFormat(wrapper); let j = $index; track sf) {
+  <div class="ifthen-block">
+    <h4>Rule {{ j + 1 }}</h4>
+    <app-ifthen [rule]="sf"></app-ifthen>
+    <button type="button" (click)="removeIfThenRuleFromWrapper(wrapper, j)">Remove Rule</button>
+  </div>
+  }
+
+  <button type="button" (click)="addIfThenRuleToWrapper(wrapper)">+ Add IF/THEN Rule</button>
+</div>
+}
+}
+
+
+
+
+<h3>Preview Result</h3>
+<pre>{{ preview() }}</pre>
+
+
+<button type="button" [disabled]="form.invalid" (click)="submit()">Submit</button>
