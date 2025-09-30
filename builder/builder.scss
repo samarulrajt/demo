@@ -1,0 +1,127 @@
+/* General layout */
+button {
+  margin: 4px;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+button[type="button"].danger {
+  background: #dc3545;
+}
+
+button[type="button"].danger:hover {
+  background: #a71d2a;
+}
+
+label {
+  font-weight: 500;
+  margin-right: 6px;
+}
+
+input,
+select {
+  margin: 0 6px 6px 0;
+  padding: 4px 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* GROUP BOX (for SINGLE and nested conditions) */
+.group-box {
+  border: 1px solid #ccc;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.group-box > label {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* RULE LINE (leaf rule) */
+.rule-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+
+/* IF/THEN WRAPPER */
+.ifthen-box {
+  border: 2px solid #007bff;
+  margin: 16px 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f9fcff;
+}
+
+.ifthen-box > label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.ifthen-box input[formControlName="outputField"] {
+  font-weight: bold;
+  width: 250px;
+  margin-bottom: 12px;
+}
+
+/* Individual IF/THEN rule block */
+.ifthen-block {
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 6px;
+  background: #fff;
+}
+
+.ifthen-block h4 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  color: #333;
+  border-bottom: 1px dashed #ddd;
+  padding-bottom: 4px;
+}
+
+.ifthen-rule {
+  margin-top: 6px;
+}
+
+/* THEN / ELSE values */
+.then-else {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.then-else label {
+  margin-right: 4px;
+  font-weight: 500;
+}
+
+/* Preview area */
+pre {
+  background: #272822;
+  color: #f8f8f2;
+  padding: 10px;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 13px;
+}
