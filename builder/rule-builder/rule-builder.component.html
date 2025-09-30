@@ -8,53 +8,99 @@
   <button type="button" (click)="resetRules()">Start New</button>
 </div>
 
-<!-- SINGLE format -->
+<!-- ================= SINGLE FORMAT ================= -->
+<!-- ================= SINGLE FORMAT ================= -->
 @if (format() === 'SINGLE') {
-@for (rule of singleGroups; track rule) {
-<app-group [group]="rule"></app-group>
-}
-}
+<div class="single-box" [formGroup]="scriptGroup">
+  <label>Combine Groups With:</label>
+  <select formControlName="rootCondition">
+    <option value="AND">AND</option>
+    <option value="OR">OR</option>
+  </select>
 
-<!-- IF_THEN format -->
-<!-- @if (format() === 'IF_THEN' && ifThenWrappers.length > 0) {
-@for (wrapper of ifThenWrappers; track wrapper) {
-<div class="ifthen-box" [formGroup]="wrapper">
-  <label>Output Field:</label>
-  <input type="text" formControlName="outputField" />
+  <button type="button" (click)="addSingleRootGroup()">+ Add Top Group</button>
 
-  @for (sf of getScriptFormat(wrapper); track sf) {
-  <app-ifthen [rule]="sf"></app-ifthen>
+  @for (grp of singleGroups; let gi = $index; track grp) {
+  <div class="root-group" [formGroup]="grp">
+    <label>Condition inside group:</label>
+    <select formControlName="condition">
+      <option value="AND">AND</option>
+      <option value="OR">OR</option>
+    </select>
+
+    <button type="button" (click)="addSingleRuleToGroup(grp)">+ Add Rule</button>
+    <button type="button" (click)="addSingleGroupToGroup(grp)">+ Add Nested Group</button>
+    <button type="button" class="danger" (click)="removeSingleRootGroup(gi)">Remove Group</button>
+
+    <div class="rules-list">
+      @for (r of getRulesArray(grp).controls; let i = $index; track r) {
+      @if (r.get('field')) {
+      <!-- Simple rule -->
+      <div class="rule-line" [formGroup]="r">
+        <select formControlName="field">
+          @for (f of fields; track f) {
+          <option [value]="f">{{ f }}</option>
+          }
+        </select>
+        <select formControlName="operator">
+          @for (op of operators; track op) {
+          <option [value]="op">{{ op }}</option>
+          }
+        </select>
+        <input formControlName="value" />
+        <button type="button" (click)="removeChildFromGroup(grp, i)">x</button>
+      </div>
+      } @else {
+      <!-- Nested group -->
+      <div class="nested-group">
+        <app-group [group]="r"></app-group>
+        <button type="button" class="danger" (click)="removeChildFromGroup(grp, i)">
+          Remove Nested Group
+        </button>
+      </div>
+      }
+      }
+    </div>
+  </div>
   }
 </div>
 }
-} -->
+
+
+<!-- ================= IF_THEN FORMAT ================= -->
 @if (format() === 'IF_THEN' && ifThenWrappers.length > 0) {
-@for (wrapper of ifThenWrappers; track wrapper) {
+<!-- <button type="button" (click)="addIfThenWrapper()">+ Add Wrapper</button> -->
+
+@for (wrapper of ifThenWrappers; let w = $index; track wrapper) {
 <div class="ifthen-box" [formGroup]="wrapper">
   <label>Output Field:</label>
   <input type="text" formControlName="outputField" />
   <span class="error" *ngIf="wrapper.get('outputField')?.invalid && wrapper.get('outputField')?.touched">
     Required
   </span>
+
   <h3>Conditions</h3>
   @for (sf of getScriptFormat(wrapper); let j = $index; track sf) {
   <div class="ifthen-block">
     <h4>Rule {{ j + 1 }}</h4>
     <app-ifthen [rule]="sf"></app-ifthen>
-    <button type="button" (click)="removeIfThenRuleFromWrapper(wrapper, j)">Remove Rule</button>
+    <button type="button" class="danger" (click)="removeIfThenRuleFromWrapper(wrapper, j)">
+      Remove Rule
+    </button>
   </div>
   }
 
   <button type="button" (click)="addIfThenRuleToWrapper(wrapper)">+ Add IF/THEN Rule</button>
+  <!-- <button type="button" class="danger" (click)="removeIfThenWrapper(w)">Remove Wrapper</button> -->
 </div>
 }
 }
 
-
-
-
-<h3>Preview Result</h3>
+<!-- ================= PREVIEW & SUBMIT ================= -->
+<h3>Preview</h3>
 <pre>{{ preview() }}</pre>
 
+<!-- <h3>Form JSON</h3>
+<pre>{{ formValue() | json }}</pre> -->
 
-<button type="button" [disabled]="form.invalid" (click)="submit()">Submit</button>
+<button type="button" (click)="submit()">Submit</button>

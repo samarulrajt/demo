@@ -1,29 +1,20 @@
 .group-box {
   border: 1px solid #ccc;
-  margin: 8px;
   padding: 8px;
-  border-radius: 5px;
-  background: #f9f9f9;
+  margin: 8px 0;
+  border-radius: 4px;
+  background: #fff;
 }
 
 .rule-line {
-  margin: 5px 0;
-  padding: 4px;
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 4px 0;
 }
 
-.ifthen-box {
-  border: 2px dashed #aaa;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 6px;
-}
-
-.ifthen-rule {
-  margin: 10px 0;
-  padding: 8px;
-  border: 1px solid #ccc;
-  background: #fefefe;
+.nested-group {
+  margin-left: 12px;
+  padding-left: 8px;
+  border-left: 2px dashed #aaa;
 }

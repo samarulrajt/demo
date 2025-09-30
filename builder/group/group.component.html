@@ -8,33 +8,33 @@
   <button type="button" (click)="addRule()">+ Rule</button>
   <button type="button" (click)="addGroup()">+ Group</button>
 
-  <div>
+  <div class="rules-list">
     @for (r of rules; let i = $index; track r) {
-    @if (r.get('field')) {
-    <div class="rule-line" [formGroup]="r">
-      <select formControlName="field">
-        @for (f of builder.fields; track f) {
-        <option [value]="f">{{ f }}</option>
-        }
-      </select>
-      <span class="error" *ngIf="r.get('field')?.invalid && r.get('field')?.touched">Required</span>
-
-      <select formControlName="operator">
-        @for (op of builder.operators; track op) {
-        <option [value]="op">{{ op }}</option>
-        }
-      </select>
-      <span class="error" *ngIf="r.get('operator')?.invalid && r.get('operator')?.touched">Required</span>
-
-      <input formControlName="value" />
-      <span class="error" *ngIf="r.get('value')?.invalid && r.get('value')?.touched">Required</span>
-
-      <button type="button" (click)="removeRule(i)">x</button>
-    </div>
-
-    } @else {
-    <app-group [group]="r"></app-group>
-    }
+      @if (r.get('field')) {
+        <!-- Simple rule -->
+        <div class="rule-line" [formGroup]="r">
+          <select formControlName="field">
+            @for (f of builder.fields; track f) {
+              <option [value]="f">{{ f }}</option>
+            }
+          </select>
+          <select formControlName="operator">
+            @for (op of builder.operators; track op) {
+              <option [value]="op">{{ op }}</option>
+            }
+          </select>
+          <input formControlName="value" />
+          <button type="button" (click)="removeRule(i)">x</button>
+        </div>
+      } @else {
+        <!-- Nested group -->
+        <div class="nested-group">
+          <app-group [group]="r"></app-group>
+          <button type="button" class="danger" (click)="removeRule(i)">
+            Remove Nested Group
+          </button>
+        </div>
+      }
     }
   </div>
 </div>

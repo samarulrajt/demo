@@ -1,19 +1,21 @@
-.ifthen-box {
-  border: 2px dashed #aaa;
-  margin: 10px 0;
-  padding: 10px;
+.ifthen-rule {
+  border: 2px solid #0066cc;
   border-radius: 6px;
-  background: #fdfdfd;
+  padding: 12px;
+  margin: 12px 0;
+  background: #f5faff;
 }
 
-.ifthen-block {
-  border: 1px solid #ddd;
-  margin: 8px 0;
+.condition-block {
+  margin-bottom: 10px;
   padding: 8px;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  background: #fff;
+  background: #fafafa;
 }
 
 .then-else {
-  margin-top: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }

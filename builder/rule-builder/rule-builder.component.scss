@@ -1,11 +1,13 @@
-.error {
-  color: #dc3545;
-  font-size: 12px;
-  margin-left: 6px;
+
+
+.single-box {
+  border: 2px solid #28a745;
+  margin: 12px 0;
+  padding: 12px;
+  border-radius: 6px;
+  background: #f9fff9;
 }
 
-input.ng-invalid.ng-touched,
-select.ng-invalid.ng-touched {
-  border-color: #dc3545;
-  background: #fff5f5;
+.rules-list {
+  margin-top: 8px;
 }

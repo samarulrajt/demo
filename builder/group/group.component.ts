@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormArray, FormGroup, FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormGroup, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RuleBuilderComponent } from '../rule-builder/rule-builder.component';
 import { CommonModule } from '@angular/common';
 
@@ -16,18 +16,32 @@ export class GroupComponent {
   constructor(private fb: FormBuilder, public builder: RuleBuilderComponent) { }
 
   get rules(): FormGroup[] {
-    return (this.group.get('rules') as FormArray).controls as FormGroup[];
+    return (this.group.get('rules') as FormArray<FormGroup>).controls;
   }
 
   addRule() {
-    (this.group.get('rules') as FormArray).push(this.builder.newSimpleRule());
+    const arr = this.group.get('rules') as FormArray<FormGroup>;
+    arr.push(
+      this.fb.group({
+        field: [this.builder.fields[0], Validators.required],
+        operator: [this.builder.operators[0], Validators.required],
+        value: ['', Validators.required],
+      })
+    );
   }
 
   addGroup() {
-    (this.group.get('rules') as FormArray).push(this.builder.newGroup());
+    const arr = this.group.get('rules') as FormArray<FormGroup>;
+    arr.push(
+      this.fb.group({
+        condition: ['AND', Validators.required],
+        rules: this.fb.array([]),
+      })
+    );
   }
 
-  removeRule(i: number) {
-    (this.group.get('rules') as FormArray).removeAt(i);
+  removeRule(index: number) {
+    const arr = this.group.get('rules') as FormArray<FormGroup>;
+    arr.removeAt(index);
   }
 }

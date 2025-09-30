@@ -1,6 +1,9 @@
 <div class="ifthen-rule" [formGroup]="rule">
   <h4>Condition</h4>
-  <app-group [group]="conditionGroup"></app-group>
+  <div class="condition-block">
+    <!-- condition is itself a group, so reuse app-group -->
+    <app-group [group]="conditionGroup"></app-group>
+  </div>
 
   <div class="then-else">
     <label>Then:</label>
